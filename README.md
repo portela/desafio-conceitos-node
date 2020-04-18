@@ -7,6 +7,7 @@
 ## Configurando ESLint - Relambrando
 
 ```console
-$ yarn add eslint eslint-plugin-import eslint-plugin-prettier -D
+$ yarn add eslint eslint-plugin-import -D
 $ yarn eslint --init
+$ yarn add prettier eslint-config-prettier eslint-plugin-prettier -D
 ```
