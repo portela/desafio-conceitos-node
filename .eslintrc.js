@@ -7,10 +7,10 @@ module.exports = {
   extends: [
     'airbnb-base',
     'prettier',
-    'jest',
   ],
   plugins: [
-    'prettier'
+    'prettier',
+    'jest'
   ],
   globals: {
     Atomics: 'readonly',
