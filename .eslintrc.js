@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     'airbnb-base',
     'prettier',
-    'jest'
+    'jest',
   ],
   plugins: [
     'prettier'
