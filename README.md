@@ -23,5 +23,3 @@ $ yarn add eslint-plugin-jest -D
 ```
 
 Ajustado arquivos: .editorconfig, .prettierrd, .eslintrc.js
-
-## Configurando Sequelize
