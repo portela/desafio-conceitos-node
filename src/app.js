@@ -10,6 +10,21 @@ app.use(cors());
 
 const repositories = [];
 
+function getRepository(request, response, next) {
+  const { id } = request.params;
+
+  const repositoryIndex = repositories.findIndex((r) => r.id === id);
+
+  if (repositoryIndex < 0) {
+    return response.status(400).json({ error: 'repository not found' });
+  }
+
+  request.index = repositoryIndex;
+  request.repository = repositories[repositoryIndex];
+
+  return next();
+}
+
 app.get('/repositories', (request, response) => {
   return response.json(repositories);
 });
@@ -24,53 +39,34 @@ app.post('/repositories', (request, response) => {
   return response.json(repository);
 });
 
-app.put('/repositories/:id', (request, response) => {
-  const { id } = request.params;
+app.put('/repositories/:id', getRepository, (request, response) => {
+  const { index } = request;
   const { url, title, techs } = request.body;
-
-  const index = repositories.findIndex((r) => r.id === id);
-
-  if (index < 0) {
-    return response.status(400).json({ error: 'repository not found' });
-  }
 
   const repository = {
     ...repositories[index],
     title,
     url,
     techs,
-  }
+  };
 
-  repositories[index] = repository
+  repositories[index] = repository;
 
   return response.json(repository);
 });
 
-app.delete('/repositories/:id', (request, response) => {
-  const { id } = request.params;
-
-  const index = repositories.findIndex((r) => r.id === id);
-
-  if (index < 0) {
-    return response.status(400).json({ error: 'repository not found' });
-  }
+app.delete('/repositories/:id', getRepository, (request, response) => {
+  const { index } = request;
 
   repositories.splice(index, 1);
 
   return response.status(204).send();
 });
 
-app.post('/repositories/:id/like', (request, response) => {
-  const { id } = request.params;
+app.post('/repositories/:id/like', getRepository, (request, response) => {
+  const { repository } = request;
 
-  const index = repositories.findIndex((r) => r.id === id);
-
-  if (index < 0) {
-    return response.status(400).json({ error: 'repository not found' });
-  }
-
-  const repository = repositories[index]
-  repository.likes += 1
+  repository.likes += 1;
 
   return response.json(repository);
 });
