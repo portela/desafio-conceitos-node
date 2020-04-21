@@ -13,7 +13,7 @@ const repositories = [];
 function getRepository(request, response, next) {
   const { id } = request.params;
 
-  const repositoryIndex = repositories.findIndex((r) => r.id === id);
+  const repositoryIndex = repositories.findIndex(r => r.id === id);
 
   if (repositoryIndex < 0) {
     return response.status(400).json({ error: 'repository not found' });
